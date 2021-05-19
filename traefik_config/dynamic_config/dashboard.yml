@@ -1,0 +1,22 @@
+http:
+   middlewares:
+      simpleAuth:
+         basicAuth:
+            users:
+               #string generated with $ htpasswd -nb ado pass
+               - ado:$apr1$KnBrFK19$289OzRwryR35sBnAWChOG1
+               - o:$apr1$2WpRBtCv$VMBUa9HDbx8fqt7ghXuMH/
+   routers:
+      dashboard:
+         rule: Host(`dashboard.localhost`)
+         entrypoints:
+            - "web"
+         middlewares:
+            - "simpleAuth"
+         service:
+            - "api@internal"
+         #tls disabled while testing on localhost
+         #tls:
+         #   certResolver:
+         #      - "lets"
+

@@ -1,0 +1,13 @@
+http:
+   services:
+      carsides:
+         loadBalancer:
+            servers:
+               - url: "http://carsides:55488"
+
+   routers:
+      carsides:
+         rule: "Host(`carsides.localhost`)"
+         entrypoints:
+            - "webs"
+         service: "carsides"

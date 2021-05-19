@@ -1,0 +1,41 @@
+log:
+   level: DEBUG
+
+api:
+   dashboard: true
+
+entrypoints:
+   web:
+      address: :80
+   #disabled while testing on localhost
+   #   http:
+   #      redirections:
+   #         entrypoint:
+   #            to: webs
+   #            scheme: https
+   webs:
+      address: :443
+
+
+	providers:
+		docker:
+			network: "coci"
+			watch: true
+
+	providers:
+		docker:
+			network: "traefik-net"
+			watch: true
+		file:
+			directory: "./dynamic_config"
+			watch: true
+
+certificatesResolvers:
+   lets:
+      acme:
+         email: "vodopivecr@result.si"
+         storage: "acme.json"
+         tlsChallenge: {}
+         httpChallenge:
+            entrypoint: web
+
